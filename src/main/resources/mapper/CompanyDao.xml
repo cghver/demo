@@ -1,0 +1,560 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tanghuachun.demo.dao.CompanyDao">
+  <resultMap id="BaseResultMap" type="com.tanghuachun.demo.entity.Company">
+    <id column="acid" jdbcType="INTEGER" property="acid" />
+    <result column="id" jdbcType="VARCHAR" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="logo" jdbcType="VARCHAR" property="logo" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="mail" jdbcType="VARCHAR" property="mail" />
+    <result column="website" jdbcType="VARCHAR" property="website" />
+    <result column="industry" jdbcType="VARCHAR" property="industry" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="type" jdbcType="VARCHAR" property="type" />
+    <result column="status" jdbcType="VARCHAR" property="status" />
+    <result column="knowledge_zl_num" jdbcType="INTEGER" property="knowledgeZlNum" />
+    <result column="knowledge_sb_num" jdbcType="INTEGER" property="knowledgeSbNum" />
+    <result column="knowledge_zzq_num" jdbcType="INTEGER" property="knowledgeZzqNum" />
+    <result column="knowledge_icp_num" jdbcType="INTEGER" property="knowledgeIcpNum" />
+    <result column="bd_longitude" jdbcType="DOUBLE" property="bdLongitude" />
+    <result column="bd_latitude" jdbcType="DOUBLE" property="bdLatitude" />
+    <result column="gd_longitude" jdbcType="DOUBLE" property="gdLongitude" />
+    <result column="gd_latitude" jdbcType="DOUBLE" property="gdLatitude" />
+    <result column="op_latest" jdbcType="CHAR" property="opLatest" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="create_user" jdbcType="VARCHAR" property="createUser" />
+    <result column="create_time" jdbcType="BIGINT" property="createTime" />
+    <result column="update_user" jdbcType="VARCHAR" property="updateUser" />
+    <result column="update_time" jdbcType="BIGINT" property="updateTime" />
+    <result column="is_deleted" jdbcType="BIT" property="isDeleted" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    acid, id, `name`, logo, description, phone, mail, website, industry, address, `type`, 
+    `status`, knowledge_zl_num, knowledge_sb_num, knowledge_zzq_num, knowledge_icp_num, 
+    bd_longitude, bd_latitude, gd_longitude, gd_latitude, op_latest, remark, create_user, 
+    create_time, update_user, update_time, is_deleted
+  </sql>
+  <select id="selectByExample" parameterType="com.tanghuachun.demo.entity.CompanyExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from company
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+    <if test="limit != null">
+      <if test="offset != null">
+        limit ${offset}, ${limit}
+      </if>
+      <if test="offset == null">
+        limit ${limit}
+      </if>
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from company
+    where acid = #{acid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from company
+    where acid = #{acid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.tanghuachun.demo.entity.CompanyExample">
+    delete from company
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" keyColumn="acid" keyProperty="acid" parameterType="com.tanghuachun.demo.entity.Company" useGeneratedKeys="true">
+    insert into company (id, `name`, logo, 
+      description, phone, mail, 
+      website, industry, address, 
+      `type`, `status`, knowledge_zl_num, 
+      knowledge_sb_num, knowledge_zzq_num, knowledge_icp_num, 
+      bd_longitude, bd_latitude, gd_longitude, 
+      gd_latitude, op_latest, remark, 
+      create_user, create_time, update_user, 
+      update_time, is_deleted)
+    values (#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{logo,jdbcType=VARCHAR}, 
+      #{description,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{mail,jdbcType=VARCHAR}, 
+      #{website,jdbcType=VARCHAR}, #{industry,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, 
+      #{type,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, #{knowledgeZlNum,jdbcType=INTEGER}, 
+      #{knowledgeSbNum,jdbcType=INTEGER}, #{knowledgeZzqNum,jdbcType=INTEGER}, #{knowledgeIcpNum,jdbcType=INTEGER}, 
+      #{bdLongitude,jdbcType=DOUBLE}, #{bdLatitude,jdbcType=DOUBLE}, #{gdLongitude,jdbcType=DOUBLE}, 
+      #{gdLatitude,jdbcType=DOUBLE}, #{opLatest,jdbcType=CHAR}, #{remark,jdbcType=VARCHAR}, 
+      #{createUser,jdbcType=VARCHAR}, #{createTime,jdbcType=BIGINT}, #{updateUser,jdbcType=VARCHAR}, 
+      #{updateTime,jdbcType=BIGINT}, #{isDeleted,jdbcType=BIT})
+  </insert>
+  <insert id="insertSelective" keyColumn="acid" keyProperty="acid" parameterType="com.tanghuachun.demo.entity.Company" useGeneratedKeys="true">
+    insert into company
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="name != null">
+        `name`,
+      </if>
+      <if test="logo != null">
+        logo,
+      </if>
+      <if test="description != null">
+        description,
+      </if>
+      <if test="phone != null">
+        phone,
+      </if>
+      <if test="mail != null">
+        mail,
+      </if>
+      <if test="website != null">
+        website,
+      </if>
+      <if test="industry != null">
+        industry,
+      </if>
+      <if test="address != null">
+        address,
+      </if>
+      <if test="type != null">
+        `type`,
+      </if>
+      <if test="status != null">
+        `status`,
+      </if>
+      <if test="knowledgeZlNum != null">
+        knowledge_zl_num,
+      </if>
+      <if test="knowledgeSbNum != null">
+        knowledge_sb_num,
+      </if>
+      <if test="knowledgeZzqNum != null">
+        knowledge_zzq_num,
+      </if>
+      <if test="knowledgeIcpNum != null">
+        knowledge_icp_num,
+      </if>
+      <if test="bdLongitude != null">
+        bd_longitude,
+      </if>
+      <if test="bdLatitude != null">
+        bd_latitude,
+      </if>
+      <if test="gdLongitude != null">
+        gd_longitude,
+      </if>
+      <if test="gdLatitude != null">
+        gd_latitude,
+      </if>
+      <if test="opLatest != null">
+        op_latest,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+      <if test="createUser != null">
+        create_user,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateUser != null">
+        update_user,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="isDeleted != null">
+        is_deleted,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="logo != null">
+        #{logo,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="mail != null">
+        #{mail,jdbcType=VARCHAR},
+      </if>
+      <if test="website != null">
+        #{website,jdbcType=VARCHAR},
+      </if>
+      <if test="industry != null">
+        #{industry,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null">
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="knowledgeZlNum != null">
+        #{knowledgeZlNum,jdbcType=INTEGER},
+      </if>
+      <if test="knowledgeSbNum != null">
+        #{knowledgeSbNum,jdbcType=INTEGER},
+      </if>
+      <if test="knowledgeZzqNum != null">
+        #{knowledgeZzqNum,jdbcType=INTEGER},
+      </if>
+      <if test="knowledgeIcpNum != null">
+        #{knowledgeIcpNum,jdbcType=INTEGER},
+      </if>
+      <if test="bdLongitude != null">
+        #{bdLongitude,jdbcType=DOUBLE},
+      </if>
+      <if test="bdLatitude != null">
+        #{bdLatitude,jdbcType=DOUBLE},
+      </if>
+      <if test="gdLongitude != null">
+        #{gdLongitude,jdbcType=DOUBLE},
+      </if>
+      <if test="gdLatitude != null">
+        #{gdLatitude,jdbcType=DOUBLE},
+      </if>
+      <if test="opLatest != null">
+        #{opLatest,jdbcType=CHAR},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createUser != null">
+        #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=BIGINT},
+      </if>
+      <if test="updateUser != null">
+        #{updateUser,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=BIGINT},
+      </if>
+      <if test="isDeleted != null">
+        #{isDeleted,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.tanghuachun.demo.entity.CompanyExample" resultType="java.lang.Long">
+    select count(*) from company
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update company
+    <set>
+      <if test="record.acid != null">
+        acid = #{record.acid,jdbcType=INTEGER},
+      </if>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.name != null">
+        `name` = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.logo != null">
+        logo = #{record.logo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.description != null">
+        description = #{record.description,jdbcType=VARCHAR},
+      </if>
+      <if test="record.phone != null">
+        phone = #{record.phone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mail != null">
+        mail = #{record.mail,jdbcType=VARCHAR},
+      </if>
+      <if test="record.website != null">
+        website = #{record.website,jdbcType=VARCHAR},
+      </if>
+      <if test="record.industry != null">
+        industry = #{record.industry,jdbcType=VARCHAR},
+      </if>
+      <if test="record.address != null">
+        address = #{record.address,jdbcType=VARCHAR},
+      </if>
+      <if test="record.type != null">
+        `type` = #{record.type,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null">
+        `status` = #{record.status,jdbcType=VARCHAR},
+      </if>
+      <if test="record.knowledgeZlNum != null">
+        knowledge_zl_num = #{record.knowledgeZlNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.knowledgeSbNum != null">
+        knowledge_sb_num = #{record.knowledgeSbNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.knowledgeZzqNum != null">
+        knowledge_zzq_num = #{record.knowledgeZzqNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.knowledgeIcpNum != null">
+        knowledge_icp_num = #{record.knowledgeIcpNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.bdLongitude != null">
+        bd_longitude = #{record.bdLongitude,jdbcType=DOUBLE},
+      </if>
+      <if test="record.bdLatitude != null">
+        bd_latitude = #{record.bdLatitude,jdbcType=DOUBLE},
+      </if>
+      <if test="record.gdLongitude != null">
+        gd_longitude = #{record.gdLongitude,jdbcType=DOUBLE},
+      </if>
+      <if test="record.gdLatitude != null">
+        gd_latitude = #{record.gdLatitude,jdbcType=DOUBLE},
+      </if>
+      <if test="record.opLatest != null">
+        op_latest = #{record.opLatest,jdbcType=CHAR},
+      </if>
+      <if test="record.remark != null">
+        remark = #{record.remark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createUser != null">
+        create_user = #{record.createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateUser != null">
+        update_user = #{record.updateUser,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updateTime != null">
+        update_time = #{record.updateTime,jdbcType=BIGINT},
+      </if>
+      <if test="record.isDeleted != null">
+        is_deleted = #{record.isDeleted,jdbcType=BIT},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update company
+    set acid = #{record.acid,jdbcType=INTEGER},
+      id = #{record.id,jdbcType=VARCHAR},
+      `name` = #{record.name,jdbcType=VARCHAR},
+      logo = #{record.logo,jdbcType=VARCHAR},
+      description = #{record.description,jdbcType=VARCHAR},
+      phone = #{record.phone,jdbcType=VARCHAR},
+      mail = #{record.mail,jdbcType=VARCHAR},
+      website = #{record.website,jdbcType=VARCHAR},
+      industry = #{record.industry,jdbcType=VARCHAR},
+      address = #{record.address,jdbcType=VARCHAR},
+      `type` = #{record.type,jdbcType=VARCHAR},
+      `status` = #{record.status,jdbcType=VARCHAR},
+      knowledge_zl_num = #{record.knowledgeZlNum,jdbcType=INTEGER},
+      knowledge_sb_num = #{record.knowledgeSbNum,jdbcType=INTEGER},
+      knowledge_zzq_num = #{record.knowledgeZzqNum,jdbcType=INTEGER},
+      knowledge_icp_num = #{record.knowledgeIcpNum,jdbcType=INTEGER},
+      bd_longitude = #{record.bdLongitude,jdbcType=DOUBLE},
+      bd_latitude = #{record.bdLatitude,jdbcType=DOUBLE},
+      gd_longitude = #{record.gdLongitude,jdbcType=DOUBLE},
+      gd_latitude = #{record.gdLatitude,jdbcType=DOUBLE},
+      op_latest = #{record.opLatest,jdbcType=CHAR},
+      remark = #{record.remark,jdbcType=VARCHAR},
+      create_user = #{record.createUser,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=BIGINT},
+      update_user = #{record.updateUser,jdbcType=VARCHAR},
+      update_time = #{record.updateTime,jdbcType=BIGINT},
+      is_deleted = #{record.isDeleted,jdbcType=BIT}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tanghuachun.demo.entity.Company">
+    update company
+    <set>
+      <if test="id != null">
+        id = #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        `name` = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="logo != null">
+        logo = #{logo,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="mail != null">
+        mail = #{mail,jdbcType=VARCHAR},
+      </if>
+      <if test="website != null">
+        website = #{website,jdbcType=VARCHAR},
+      </if>
+      <if test="industry != null">
+        industry = #{industry,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null">
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        `type` = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        `status` = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="knowledgeZlNum != null">
+        knowledge_zl_num = #{knowledgeZlNum,jdbcType=INTEGER},
+      </if>
+      <if test="knowledgeSbNum != null">
+        knowledge_sb_num = #{knowledgeSbNum,jdbcType=INTEGER},
+      </if>
+      <if test="knowledgeZzqNum != null">
+        knowledge_zzq_num = #{knowledgeZzqNum,jdbcType=INTEGER},
+      </if>
+      <if test="knowledgeIcpNum != null">
+        knowledge_icp_num = #{knowledgeIcpNum,jdbcType=INTEGER},
+      </if>
+      <if test="bdLongitude != null">
+        bd_longitude = #{bdLongitude,jdbcType=DOUBLE},
+      </if>
+      <if test="bdLatitude != null">
+        bd_latitude = #{bdLatitude,jdbcType=DOUBLE},
+      </if>
+      <if test="gdLongitude != null">
+        gd_longitude = #{gdLongitude,jdbcType=DOUBLE},
+      </if>
+      <if test="gdLatitude != null">
+        gd_latitude = #{gdLatitude,jdbcType=DOUBLE},
+      </if>
+      <if test="opLatest != null">
+        op_latest = #{opLatest,jdbcType=CHAR},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createUser != null">
+        create_user = #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=BIGINT},
+      </if>
+      <if test="updateUser != null">
+        update_user = #{updateUser,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=BIGINT},
+      </if>
+      <if test="isDeleted != null">
+        is_deleted = #{isDeleted,jdbcType=BIT},
+      </if>
+    </set>
+    where acid = #{acid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tanghuachun.demo.entity.Company">
+    update company
+    set id = #{id,jdbcType=VARCHAR},
+      `name` = #{name,jdbcType=VARCHAR},
+      logo = #{logo,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
+      mail = #{mail,jdbcType=VARCHAR},
+      website = #{website,jdbcType=VARCHAR},
+      industry = #{industry,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      `type` = #{type,jdbcType=VARCHAR},
+      `status` = #{status,jdbcType=VARCHAR},
+      knowledge_zl_num = #{knowledgeZlNum,jdbcType=INTEGER},
+      knowledge_sb_num = #{knowledgeSbNum,jdbcType=INTEGER},
+      knowledge_zzq_num = #{knowledgeZzqNum,jdbcType=INTEGER},
+      knowledge_icp_num = #{knowledgeIcpNum,jdbcType=INTEGER},
+      bd_longitude = #{bdLongitude,jdbcType=DOUBLE},
+      bd_latitude = #{bdLatitude,jdbcType=DOUBLE},
+      gd_longitude = #{gdLongitude,jdbcType=DOUBLE},
+      gd_latitude = #{gdLatitude,jdbcType=DOUBLE},
+      op_latest = #{opLatest,jdbcType=CHAR},
+      remark = #{remark,jdbcType=VARCHAR},
+      create_user = #{createUser,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=BIGINT},
+      update_user = #{updateUser,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=BIGINT},
+      is_deleted = #{isDeleted,jdbcType=BIT}
+    where acid = #{acid,jdbcType=INTEGER}
+  </update>
+</mapper>
