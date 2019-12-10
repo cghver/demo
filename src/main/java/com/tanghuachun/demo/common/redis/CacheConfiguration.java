@@ -11,6 +11,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -67,22 +68,14 @@ public class CacheConfiguration {
 
             ClusterServersConfig serverConfig = config.useClusterServers()
                     .addNodeAddress(newNodes.toArray(new String[0]))
-                    .setScanInterval(
-                            redisProperties.getCluster().getScanInterval())
-                    .setIdleConnectionTimeout(
-                            redisProperties.getPool().getSoTimeout())
-                    .setConnectTimeout(
-                            redisProperties.getPool().getConnTimeout())
-                    .setFailedAttempts(
-                            redisProperties.getCluster().getFailedAttempts())
-                    .setRetryAttempts(
-                            redisProperties.getCluster().getRetryAttempts())
-                    .setRetryInterval(
-                            redisProperties.getCluster().getRetryInterval())
-                    .setMasterConnectionPoolSize(redisProperties.getCluster()
-                            .getMasterConnectionPoolSize())
-                    .setSlaveConnectionPoolSize(redisProperties.getCluster()
-                            .getSlaveConnectionPoolSize())
+                    .setScanInterval(redisProperties.getCluster().getScanInterval())
+                    .setIdleConnectionTimeout(redisProperties.getPool().getSoTimeout())
+                    .setConnectTimeout(redisProperties.getPool().getConnTimeout())
+                    .setFailedSlaveCheckInterval(redisProperties.getSentinel().getFailMax())
+                    .setRetryAttempts(redisProperties.getCluster().getRetryAttempts())
+                    .setRetryInterval(redisProperties.getCluster().getRetryInterval())
+                    .setMasterConnectionPoolSize(redisProperties.getCluster().getMasterConnectionPoolSize())
+                    .setSlaveConnectionPoolSize(redisProperties.getCluster().getSlaveConnectionPoolSize())
                     .setTimeout(redisProperties.getTimeout());
             if (StrUtil.isNotBlank(redisProperties.getPassword())) {
                 serverConfig.setPassword(redisProperties.getPassword());
@@ -109,7 +102,7 @@ public class CacheConfiguration {
                     .addSentinelAddress(newNodes.toArray(new String[0]))
                     .setMasterName(redisProperties.getSentinel().getMaster())
                     .setReadMode(ReadMode.SLAVE)
-                    .setFailedAttempts(redisProperties.getSentinel().getFailMax())
+                    .setFailedSlaveCheckInterval(redisProperties.getSentinel().getFailMax())
                     .setTimeout(redisProperties.getTimeout())
                     .setMasterConnectionPoolSize(redisProperties.getPool().getSize())
                     .setSlaveConnectionPoolSize(redisProperties.getPool().getSize());
