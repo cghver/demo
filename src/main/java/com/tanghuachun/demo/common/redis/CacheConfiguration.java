@@ -35,6 +35,7 @@ public class CacheConfiguration {
         @Bean
         @ConditionalOnProperty(name = "spring.redis.mode", havingValue = "single")
         RedissonClient redissonSingle() {
+            System.out.println(redisProperties);
             Config config = new Config();
             String node = redisProperties.getSingle().getAddress();
             node = node.startsWith("redis://") ? node : "redis://" + node;
@@ -58,7 +59,6 @@ public class CacheConfiguration {
         @Bean
         @ConditionalOnProperty(name = "spring.redis.mode", havingValue = "cluster")
         RedissonClient redissonCluster() {
-            System.out.println("cluster redisProperties:" + redisProperties.getCluster());
 
             Config config = new Config();
             String[] nodes = redisProperties.getCluster().getNodes().split(",");

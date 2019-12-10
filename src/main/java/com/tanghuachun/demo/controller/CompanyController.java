@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import javax.annotation.Resource;
+import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 @RestController
 @RequestMapping("/company")
@@ -26,6 +28,16 @@ public class CompanyController {
     @PostMapping("/findWithConditions")
     @MyValid(returnPageResponseType = true)
     PageResponse findWithConditions(@RequestBody FindWithConditionsRequest request){
+
+        RQueue<String> queue = redissonClient.getQueue("queue1");
+        queue.add("tanghuachun");
+        queue.add("darren");
+        queue.add("thc");
+        System.out.println(queue.readAll());
+        System.out.println(queue.poll());
+        System.out.println(queue.readAll());
+
+
         return companyService.findWithConditions(request);
     }
 }
