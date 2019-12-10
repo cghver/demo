@@ -4,6 +4,10 @@ import com.tanghuachun.demo.common.aop.validate.MyValid;
 import com.tanghuachun.demo.common.response.PageResponse;
 import com.tanghuachun.demo.request.FindWithConditionsRequest;
 import com.tanghuachun.demo.service.CompanyService;
+import org.redisson.api.RBucket;
+import org.redisson.api.RQueue;
+import org.redisson.api.RedissonClient;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,6 +20,8 @@ public class CompanyController {
 
     @Resource
     private CompanyService companyService;
+    @Autowired
+    private RedissonClient redissonClient;
 
     @PostMapping("/findWithConditions")
     @MyValid(returnPageResponseType = true)

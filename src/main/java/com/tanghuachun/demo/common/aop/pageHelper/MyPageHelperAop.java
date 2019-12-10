@@ -32,8 +32,8 @@ public class MyPageHelperAop {
                 Page<Object> page = PageHelper.startPage(((BasePageRequest) o).getPageNo(), ((BasePageRequest) o).getPageSize());
                 Object ret = joinPoint.proceed();
                 if (ret instanceof PageResponse) {
-                    ((PageResponse) ret).setCode(ResponseCode.SUCCESS.getCode());
                     ((PageResponse) ret).setMsg(ResponseCode.SUCCESS.getDesc());
+                    ((PageResponse) ret).setCode(ResponseCode.SUCCESS.getCode());
                     ((PageResponse) ret).setTotal((int) page.getTotal());
                     ((PageResponse) ret).setData(page.getResult());
                     ((PageResponse) ret).setTotalPages(page.getPages());

@@ -5,5 +5,6 @@
 http转发<br/>
 hutool工具类<br/>
 guava工具类<br/>
-controller + service + dao示例
+controller + service + dao示例<br/>
+redis：使用redisson
 
