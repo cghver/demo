@@ -3,6 +3,9 @@ package com.tanghuachun.demo.common.redis;
 import cn.hutool.core.util.StrUtil;
 import org.redisson.Redisson;
 import org.redisson.api.RedissonClient;
+import org.redisson.client.codec.Codec;
+import org.redisson.client.codec.StringCodec;
+import org.redisson.codec.JsonJacksonCodec;
 import org.redisson.config.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
@@ -47,6 +50,7 @@ public class CacheConfiguration {
             if (StrUtil.isNotBlank(redisProperties.getPassword())) {
                 serverConfig.setPassword(redisProperties.getPassword());
             }
+            config.setCodec(new JsonJacksonCodec());
             return Redisson.create(config);
         }
 
@@ -80,6 +84,7 @@ public class CacheConfiguration {
             if (StrUtil.isNotBlank(redisProperties.getPassword())) {
                 serverConfig.setPassword(redisProperties.getPassword());
             }
+            config.setCodec(new JsonJacksonCodec());
             return Redisson.create(config);
         }
 
@@ -110,7 +115,7 @@ public class CacheConfiguration {
             if (StrUtil.isNotBlank(redisProperties.getPassword())) {
                 serverConfig.setPassword(redisProperties.getPassword());
             }
-
+            config.setCodec(new JsonJacksonCodec());
             return Redisson.create(config);
         }
     }
