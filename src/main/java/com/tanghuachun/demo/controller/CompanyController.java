@@ -1,7 +1,16 @@
 package com.tanghuachun.demo.controller;
 
+import cn.hutool.cache.Cache;
+import cn.hutool.cache.CacheUtil;
+import cn.hutool.core.date.DateTime;
+import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.lang.Validator;
+import cn.hutool.core.util.StrUtil;
+import com.github.pagehelper.cache.GuavaCache;
+import com.google.common.cache.CacheBuilder;
 import com.tanghuachun.demo.common.aop.validate.MyValid;
 import com.tanghuachun.demo.common.response.PageResponse;
+import com.tanghuachun.demo.common.time.TimeHelper;
 import com.tanghuachun.demo.entity.Company;
 import com.tanghuachun.demo.request.FindWithConditionsRequest;
 import com.tanghuachun.demo.service.CompanyService;
@@ -15,8 +24,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import javax.annotation.Resource;
-import java.util.Map;
-import java.util.concurrent.TimeUnit;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 
 @RestController
 @RequestMapping("/company")
@@ -30,7 +39,7 @@ public class CompanyController {
 
     @PostMapping("/findWithConditions")
     @MyValid(returnPageResponseType = true)
-    PageResponse findWithConditions(@RequestBody FindWithConditionsRequest request){
+    PageResponse findWithConditions(@RequestBody FindWithConditionsRequest request){ ;
 //        Company company = new Company();
 //        company.setAddress("上海");
 //        Company company1 = new Company();
@@ -46,5 +55,9 @@ public class CompanyController {
 //        log.info("{}", stringRQueue.poll());
 //        log.info("地址是：{}", queue.poll().getAddress());
         return companyService.findWithConditions(request);
+    }
+
+    public static void main(String[] args) {
+        System.out.println(DateUtil.format(new Date(), "yyMMdd"));
     }
 }
