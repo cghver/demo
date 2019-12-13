@@ -6,9 +6,8 @@ import com.tanghuachun.demo.common.aop.validate.MyValid;
 import com.tanghuachun.demo.common.response.PageResponse;
 import com.tanghuachun.demo.request.FindWithConditionsRequest;
 import com.tanghuachun.demo.service.CompanyService;
-import lombok.extern.slf4j.Slf4j;
+import lombok.extern.log4j.Log4j2;
 import org.redisson.api.RedissonClient;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,14 +15,17 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 
+/**
+ * @author darren
+ */
 @RestController
 @RequestMapping("/company")
-@Slf4j
+@Log4j2
 public class CompanyController {
 
     @Resource
     private CompanyService companyService;
-    @Autowired
+    @Resource
     private RedissonClient redissonClient;
 
     @PostMapping("/findWithConditions")
@@ -34,7 +36,6 @@ public class CompanyController {
 
     public static void main(String[] args) {
         Snowflake snowflake = IdUtil.createSnowflake(1, 1);
-        //ServletUtil.write();
         System.out.println(IdUtil.objectId());
     }
 }
