@@ -1,5 +1,7 @@
 package com.tanghuachun.demo.common.request;
 
+import javax.servlet.ServletRequest;
+import javax.servlet.http.HttpServletRequest;
 import java.io.Serializable;
 
 public class BasePageRequest implements Serializable {
