@@ -1,5 +1,6 @@
 package com.tanghuachun.demo.common.response;
 
+import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONUtil;
 
 import java.io.Serializable;
@@ -134,7 +135,7 @@ public class PageResponse<T> implements Serializable {
         return new PageResponse<>(ResponseCode.FAILED.getCode(), ResponseCode.FAILED.getDesc());
     }
 
-    public static PageResponse failed(String msg) {
+    public static PageResponse<Object> failed(String msg) {
         return new PageResponse<>(ResponseCode.FAILED.getCode(), msg);
     }
 
@@ -157,7 +158,6 @@ public class PageResponse<T> implements Serializable {
     public static <T> PageResponse<T> jsonToPageResponse(String json, Class<T> bean) {
         String code = JSONUtil.parseObj(json).getStr("code");
         String msg = JSONUtil.parseObj(json).getStr("msg");
-
         Integer pageNo = Optional.ofNullable(JSONUtil.parseObj(json).getInt("pageNo")).orElse(0);
         Integer pageSize = Optional.ofNullable(JSONUtil.parseObj(json).getInt("pageSize")).orElse(0);
         Integer total = Optional.ofNullable(JSONUtil.parseObj(json).getInt("total")).orElse(0);
@@ -167,7 +167,7 @@ public class PageResponse<T> implements Serializable {
             return null;
         }
 
-        if (data == null || "null".equals(data) ){
+        if (StrUtil.isBlank(data)){
             return new PageResponse<>(code, msg, pageNo, pageSize, total, totalPages, null);
         }
         List<T> list = JSONUtil.toList(JSONUtil.parseArray(data), bean);

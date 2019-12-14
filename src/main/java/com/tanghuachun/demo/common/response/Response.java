@@ -1,15 +1,15 @@
 package com.tanghuachun.demo.common.response;
 
+import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
-import org.apache.http.HttpResponse;
-
+import lombok.extern.log4j.Log4j2;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.Serializable;
 import java.util.List;
-
+@Log4j2
 public final class Response<T> implements Serializable {
     private String code;
     private String msg;
@@ -143,12 +143,10 @@ public final class Response<T> implements Serializable {
         if (code == null || msg == null) {
             return null;
         }
-        if (bean == null || data == null || "null".equals(data)) {
+        if (StrUtil.isBlank(data)) {
             return new Response<>(code, msg, null);
         }
-
         List<T> list = JSONUtil.toList(JSONUtil.parseArray(data), bean);
-
         return new Response<>(code, msg, list);
     }
 
@@ -168,7 +166,7 @@ public final class Response<T> implements Serializable {
             jsonObject.put("data", null);
             writer.print(jsonObject);
         } catch (IOException e) {
-            //logger.error("拦截器输出流异常: {}", e);
+            log.error("拦截器输出流异常: {}", e);
         } finally {
             if (writer != null) {
                 writer.close();
